@@ -1,5 +1,5 @@
 import express, { Application, Request, Response } from 'express'
-import UserRouter from './users/interfaces/user.routes';
+import RoutesUser from './users/interfaces/http/user.routes';
 import DriverRouter from './drivers/interfaces/drivers.route';
 
 /* const app = express();
@@ -20,7 +20,7 @@ class App {
     }
 
     mountRouter(): void {
-        this.expressApp.use("/users", UserRouter)
+        this.expressApp.use("/users", new RoutesUser().expressRouter)
         this.expressApp.use("/drivers", DriverRouter)
     }
 

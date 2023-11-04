@@ -1,13 +1,13 @@
 import express, {Request, Response} from 'express'
 // import BaseRouter from '../../shared/interfaces/base.router';
 
-const DriverRouter = express.Router();
+const HistoryRouter = express.Router();
 
-DriverRouter.get('/', (req: Request , res: Response) => {
-    res.send("drivers");
+HistoryRouter.get('/', (req: Request , res: Response) => {
+    res.send("historys");
 })
 
-export default DriverRouter
+export default HistoryRouter
 
 /* export default class extends BaseRouter{
     
