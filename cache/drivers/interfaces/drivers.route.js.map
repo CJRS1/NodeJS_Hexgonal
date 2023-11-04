@@ -1,0 +1,1 @@
+{"version":3,"file":"drivers.route.js","sourceRoot":"","sources":["../../../src/drivers/interfaces/drivers.route.ts"],"names":[],"mappings":";;;;;AAAA,sDAAkD;AAClD,gEAAgE;AAEhE,MAAM,YAAY,GAAG,iBAAO,CAAC,MAAM,EAAE,CAAC;AAEtC,YAAY,CAAC,GAAG,CAAC,GAAG,EAAE,CAAC,GAAY,EAAG,GAAa,EAAE,EAAE;IACnD,GAAG,CAAC,IAAI,CAAC,SAAS,CAAC,CAAC;AACxB,CAAC,CAAC,CAAA;AAEF,kBAAe,YAAY,CAAA;AAE3B;;IAEI"}

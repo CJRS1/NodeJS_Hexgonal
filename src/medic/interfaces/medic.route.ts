@@ -1,5 +1,5 @@
 import express, {Request, Response} from 'express'
-import BaseRouter from '../../shared/interfaces/base.router';
+// import BaseRouter from '../../shared/interfaces/base.router';
 
 const MedicRouter = express.Router();
 
