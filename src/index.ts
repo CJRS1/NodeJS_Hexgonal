@@ -1,19 +1,14 @@
-import http from 'http'
+import DatabaseBootstrap from './bootstrap/database.interface';
+import ServerBoostrap from './bootstrap/server.bootstrap'
 
-const server = http.createServer((req, res) => {
-    console.log(req.url)
-    if (req.url?.toLowerCase() === '/users/details') {
-        const user = {
-            name: "Carlos",
-            edad: 35
-        }
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.write("Response is ok")
-        res.end(JSON.stringify(user));
-    } else {
-        res.writeHead(200, { "Content-Type": "text/plain" });
-        res.write("Response is ok")
-        res.end()
+const serverBoostrap = new ServerBoostrap();
+const databaseBootstrap = new DatabaseBootstrap();
+
+(async () => {
+    try {
+        await serverBoostrap.initialize();
+        await databaseBootstrap.initialize();
+    } catch (err) {
+        console.error(err);
     }
-})
-server.listen(3000)
+})()
