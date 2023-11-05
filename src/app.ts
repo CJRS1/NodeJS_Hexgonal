@@ -1,6 +1,6 @@
 import express, { Application, Request, Response } from 'express'
 import RoutesUser from './users/interfaces/http/user.routes';
-import DriverRouter from './drivers/interfaces/drivers.route';
+import RoutesDriver from "./drivers/interfaces/drivers.route";
 
 /* const app = express();
  */
@@ -21,7 +21,7 @@ class App {
 
     mountRouter(): void {
         this.expressApp.use("/users", new RoutesUser().expressRouter)
-        this.expressApp.use("/drivers", DriverRouter)
+        this.expressApp.use("/drivers", new RoutesDriver().expressRouter);
     }
 
     mountHealthCheck(): void {

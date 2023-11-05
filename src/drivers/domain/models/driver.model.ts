@@ -3,6 +3,7 @@ export class DriverModel{
         public id: number,
         public name: string,
         public lastname: string,
-        public licenceDriver: string
+        public licenseDriver: string,
+        public active: boolean
     ){}
 }
