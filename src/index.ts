@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import DatabaseBootstrap from './bootstrap/database.interface';
+import DatabaseBootstrap from './bootstrap/database.bootstrap';
 import ServerBoostrap from './bootstrap/server.bootstrap'
 
 const serverBootstrap = new ServerBoostrap();

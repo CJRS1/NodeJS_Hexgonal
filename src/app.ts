@@ -14,9 +14,16 @@ class App {
 
     constructor() {
         this.expressApp = express();
+        /* El orden importa */
+        this.mountMiddlewares();
         /* Se llama al mountRouter sino no funciona */
         this.mountRouter();
         this.mountHealthCheck();
+    }
+
+    mountMiddlewares(): void {
+        this.expressApp.use(express.json());
+        this.expressApp.use(express.urlencoded({ extended: true })); // request.body
     }
 
     mountRouter(): void {

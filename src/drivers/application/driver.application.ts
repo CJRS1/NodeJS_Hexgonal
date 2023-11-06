@@ -3,29 +3,31 @@ import { DriverRepository } from "../domain/repositories/driver.repository";
 
 export class DriverApplication {
     /* Para no usar dependencias ocultas usamos a DriverRepository */
-    constructor(private repositoryDriver : DriverRepository){}
+    constructor(private repositoryDriver: DriverRepository) { }
 
-    async add(driver : DriverModel){
+    async add(driver: DriverModel) {
         return await this.repositoryDriver.insert(driver);
     }
 
-    async update(driver : DriverModel){
+    async update(driver: DriverModel) {
         return await this.repositoryDriver.update(driver);
     }
 
-    async delete(id: number){
+    async delete(id: number) {
         return await this.repositoryDriver.delete(id);
     }
 
-    async findById(id: number){
+    async findById(id: number) {
         return await this.repositoryDriver.findById(id);
     }
-
-    async findAll(){
-        return await this.repositoryDriver.findAll();
+    /* Aquí va la logica */
+    async findAll() {
+        return await this.repositoryDriver.findAll(
+            { active: true },
+            { lastname: "ASC", name: "ASC" }
+        );
     }
-
-    async getReportByDriver(id: number){
+    async getReportByDriver(id: number) {
         return await this.repositoryDriver.getReportByDriver(id);
     }
 }
