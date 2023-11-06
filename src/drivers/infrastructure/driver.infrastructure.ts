@@ -1,7 +1,11 @@
+import Result from "src/shared/application/interface/result.interface";
 import { BaseInfrastructure } from "../../shared/infrastructure/base-infrastructure";
 import { DriverEntity } from "../domain/models/driver.entity";
 import { DriverModel } from "../domain/models/driver.model"
 import { DriverRepository } from "../domain/repositories/driver.repository";
+import DatabaseBootstrap from "src/bootstrap/database.bootstrap";
+import { Repository } from "typeorm";
+import { ResponseDto } from "src/shared/application/interface/dto/response.dto";
 
 export class DriverInfrastructure 
 extends BaseInfrastructure<DriverModel> 
@@ -10,6 +14,16 @@ implements DriverRepository {
     constructor(){
         super(DriverEntity);
     }
+
+    async getAll(where: object = {}): Promise<Result<DriverModel>> {
+        const dataSource = DatabaseBootstrap.dataSource;
+        const repository: Repository<DriverModel> =
+        dataSource.getRepository(DriverEntity);
+    
+        const data: DriverModel[] = await repository.find({ where });
+    
+        return ResponseDto("", data);
+}
 
     getReportByDriver(id: number): Promise<DriverModel[]> {
         throw new Error("Method not implemented.");

@@ -1,16 +1,18 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-// import BaseRouter from '../../shared/interfaces/base.router';
-const DriverRouter = express_1.default.Router();
-DriverRouter.get('/', (req, res) => {
-    res.send("drivers");
-});
-exports.default = DriverRouter;
-/* export default class extends BaseRouter{
-    
-} */ 
+const base_router_1 = require("../../shared/interfaces/base.router");
+const driver_infrastructure_1 = require("../infrastructure/driver.infrastructure");
+const driver_application_1 = require("../application/driver.application");
+const drivers_controller_1 = require("./drivers.controller");
+const infrastructure = new driver_infrastructure_1.DriverInfrastructure();
+const application = new driver_application_1.DriverApplication(infrastructure);
+const driverController = new drivers_controller_1.DriverController(application);
+class default_1 extends base_router_1.BaseRouter {
+    constructor() {
+        super(driverController);
+    }
+    mountRoutes() {
+    }
+}
+exports.default = default_1;
 //# sourceMappingURL=drivers.route.js.map

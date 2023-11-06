@@ -1,25 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HistoryApplication = void 0;
-class HistoryApplication {
+const base_application_1 = require("src/shared/application/interface/base.application");
+class HistoryApplication extends base_application_1.BaseApplication {
     /* Para no usar dependencias ocultas usamos a HistoryRepository */
     constructor(repositoryHistory) {
+        super(repositoryHistory);
         this.repositoryHistory = repositoryHistory;
-    }
-    async add(history) {
-        return await this.repositoryHistory.insert(history);
-    }
-    async update(history) {
-        return await this.repositoryHistory.update(history);
-    }
-    async delete(id) {
-        return await this.repositoryHistory.delete(id);
-    }
-    async findById(id) {
-        return await this.repositoryHistory.findById(id);
-    }
-    async findAll() {
-        return await this.repositoryHistory.findAll();
     }
     async getReportByHistory(id) {
         return await this.repositoryHistory.getReportByHistory(id);

@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express'
 import RoutesUser from './users/interfaces/http/user.routes';
 import RoutesDriver from "./drivers/interfaces/drivers.route";
+import { v4 as uuidv4 } from "uuid";
 
 /* const app = express();
  */
@@ -24,10 +25,15 @@ class App {
     mountMiddlewares(): void {
         this.expressApp.use(express.json());
         this.expressApp.use(express.urlencoded({ extended: true })); // request.body
+        this.expressApp.use((req, res, next) => {
+            (req as any).traceId = uuidv4(); // Usar 'as any' para evitar errores de tipos
+            next();
+        });
+        
     }
 
     mountRouter(): void {
-        this.expressApp.use("/users", new RoutesUser().expressRouter)
+        // this.expressApp.use("/users", new RoutesUser().expressRouter)
         this.expressApp.use("/drivers", new RoutesDriver().expressRouter);
     }
 

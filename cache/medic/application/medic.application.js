@@ -1,25 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MedicApplication = void 0;
-class MedicApplication {
+const base_application_1 = require("src/shared/application/interface/base.application");
+class MedicApplication extends base_application_1.BaseApplication {
     /* Para no usar dependencias ocultas usamos a MedicRepository */
     constructor(repositoryMedic) {
+        super(repositoryMedic);
         this.repositoryMedic = repositoryMedic;
-    }
-    async add(medic) {
-        return await this.repositoryMedic.insert(medic);
-    }
-    async update(medic) {
-        return await this.repositoryMedic.update(medic);
-    }
-    async delete(id) {
-        return await this.repositoryMedic.delete(id);
-    }
-    async findById(id) {
-        return await this.repositoryMedic.findById(id);
-    }
-    async findAll() {
-        return await this.repositoryMedic.findAll();
     }
     async getReportByMedic(id) {
         return await this.repositoryMedic.getReportByMedic(id);

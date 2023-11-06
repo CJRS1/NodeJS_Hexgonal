@@ -2,11 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DriverModel = void 0;
 class DriverModel {
-    constructor(id, name, lastname, licenceDriver) {
+    constructor(id, name, lastname, licenseDriver, active) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
-        this.licenceDriver = licenceDriver;
+        this.licenseDriver = licenseDriver;
+        this.active = active;
     }
 }
 exports.DriverModel = DriverModel;
