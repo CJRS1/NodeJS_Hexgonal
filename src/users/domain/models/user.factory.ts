@@ -6,20 +6,24 @@ export class UserFactory {
     id: number
     name: string
     lastname: string
+    passwords: string
     age: number
     refreshToken: string
     createdAt: Date
     updatedAt: Date
     deletedAt: Date
+    active: boolean
     create(
         id: number,
         name: string,
         lastname: string,
+        password: string,
         age: number,
         refreshToken: string,
         createdAt: Date,
         updatedAt: Date,
-        deletedAt: Date
+        deletedAt: Date,
+        active: boolean
     ) {
         if (updatedAt < createdAt || deletedAt < createdAt) {
             throw new Error("Invalid date")
@@ -33,11 +37,13 @@ export class UserFactory {
             id,
             name,
             lastname,
+            password,
             age,
             RefreshTokenVO.create(refreshToken),
             createdAt,
             updatedAt,
-            deletedAt
+            deletedAt,
+            active
             )
     }
 }

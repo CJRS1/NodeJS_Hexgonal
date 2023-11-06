@@ -5,10 +5,12 @@ export class UserModel {
         public id: number, 
         public name: string, 
         public lastname: string, 
+        public password: string,
         public age: number, 
         public refreshToken: RefreshTokenVO,
         public createdAt: Date,
         public updatedAt: Date,
-        public deletedAt: Date
+        public deletedAt: Date,
+        public active: boolean
         ) {}
 }
