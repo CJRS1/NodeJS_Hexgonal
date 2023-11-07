@@ -15,7 +15,7 @@ RUN npm run build
 
 #Cuando el contenedor exista se va a ejecutar este comando
 #Se ejecuta cuando se crea el contenedor no la imagen
-# CMD ["npm", "run", "start"]
+#CMD ["npm", "run", "start"]
 
 FROM node:16.13-alpine3.15
 
