@@ -4,11 +4,15 @@ import * as _ from "lodash"
 import Result from "../application/interface/result.interface";
 import { ResponseDto } from "../application/interface/dto/response.dto";
 import { Trace } from "../helpers/trace.helpers";
+import { Logger } from "../helpers/logging.helpers";
 
 
 export abstract class BaseInfrastructure<T> {
 
-    constructor(private entity: ObjectType<T>) { }
+    constructor(
+        private entity: ObjectType<T>,
+        private infrastructureName: string = null,
+        ) { }
 
     async update(
         entity: Partial<T>,
@@ -25,7 +29,7 @@ export abstract class BaseInfrastructure<T> {
         recordToUpdate = _.merge(recordToUpdate, entity);
         await repository.save(recordToUpdate)
 
-        return ResponseDto<T>(Trace.traceId,recordToUpdate);
+        return ResponseDto<T>(Trace.traceId(),recordToUpdate);
     }
     async delete(
         where: object
@@ -37,7 +41,7 @@ export abstract class BaseInfrastructure<T> {
         })
         recordToDelete = _.merge(recordToDelete, { active: false })
         await repository.save(recordToDelete)
-        return ResponseDto<T>(Trace.traceId,recordToDelete);
+        return ResponseDto<T>(Trace.traceId(),recordToDelete);
     }
 
     async findOne(
@@ -47,7 +51,7 @@ export abstract class BaseInfrastructure<T> {
         const dataSource = DatabaseBootstrap.dataSource;
         const repository: Repository<T> = dataSource.getRepository(this.entity)
         const data: T = await repository.findOne({ where, relations })
-        return ResponseDto<T>(Trace.traceId,data);
+        return ResponseDto<T>(Trace.traceId(),data);
     }
     /* Valor por defecto se el da al findAll vario por si no se envia nada */
     async findAll(
@@ -55,6 +59,14 @@ export abstract class BaseInfrastructure<T> {
         relations: string[] = [],
         order: object = {}
     ): Promise<Result<T>> {
+        Logger.getLogger().info({
+            typeElement: this.infrastructureName || "infractucture",
+            typeAction: "list",
+            traceId: Trace.traceId(),
+            message: "List all drivers",
+            query: JSON.stringify({}),
+            datetime: new Date(),
+        });
         const dataSource = DatabaseBootstrap.dataSource;
         const repository: Repository<T> = dataSource.getRepository(this.entity)
 
@@ -65,7 +77,7 @@ export abstract class BaseInfrastructure<T> {
             relations,
             order,
         });
-        return ResponseDto<T>(Trace.traceId,data);
+        return ResponseDto<T>(Trace.traceId(),data);
     }
 
     async insert(entity: T): Promise<Result<T>> {
@@ -73,7 +85,7 @@ export abstract class BaseInfrastructure<T> {
         const repository: Repository<T> = dataSource.getRepository(this.entity)
         const instance = repository.create(entity)
         const data: T = await repository.save(instance)
-        return ResponseDto<T>(Trace.traceId,data);
+        return ResponseDto<T>(Trace.traceId(),data);
     }
 
     async getPage(
@@ -93,6 +105,6 @@ export abstract class BaseInfrastructure<T> {
             take: pageSize,
         });
 
-        return ResponseDto<T>(Trace.traceId, data, total);
+        return ResponseDto<T>(Trace.traceId(), data, total);
     }
 }

@@ -1,4 +1,4 @@
-import { BaseApplication } from "src/shared/application/interface/base.application";
+import { BaseApplication } from "../../shared/application/interface/base.application";
 import { DriverModel } from "../domain/models/driver.model";
 import { DriverRepository } from "../domain/repositories/driver.repository";
 import { DriverDTO } from "./dtos/dto";
@@ -6,7 +6,7 @@ import { DriverDTO } from "./dtos/dto";
 export class DriverApplication extends BaseApplication<DriverModel> {
     /* Para no usar dependencias ocultas usamos a DriverRepository */
     constructor(private repositoryDriver: DriverRepository) {
-        super(repositoryDriver, new DriverDTO());
+        super(repositoryDriver, new DriverDTO(), "DriverApplication");
     }
 
     /* Aquí va la logica */

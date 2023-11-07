@@ -1,4 +1,4 @@
-import { BaseApplication } from "src/shared/application/interface/base.application";
+import { BaseApplication } from "../../shared/application/interface/base.application";
 import { UserModel } from "../domain/models/user.model";
 import { UserRepository } from "../domain/repositories/user.repository";
 

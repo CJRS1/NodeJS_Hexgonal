@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MedicApplication = void 0;
-const base_application_1 = require("src/shared/application/interface/base.application");
+const base_application_1 = require("../../shared/application/interface/base.application");
 class MedicApplication extends base_application_1.BaseApplication {
     /* Para no usar dependencias ocultas usamos a MedicRepository */
     constructor(repositoryMedic) {

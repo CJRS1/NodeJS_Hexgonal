@@ -6,11 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DriverInfrastructure = void 0;
 const base_infrastructure_1 = require("../../shared/infrastructure/base-infrastructure");
 const driver_entity_1 = require("../domain/models/driver.entity");
-const database_bootstrap_1 = __importDefault(require("src/bootstrap/database.bootstrap"));
-const response_dto_1 = require("src/shared/application/interface/dto/response.dto");
+const database_bootstrap_1 = __importDefault(require("../../bootstrap/database.bootstrap"));
+const response_dto_1 = require("../../shared/application/interface/dto/response.dto");
 class DriverInfrastructure extends base_infrastructure_1.BaseInfrastructure {
     constructor() {
-        super(driver_entity_1.DriverEntity);
+        super(driver_entity_1.DriverEntity, "DriverInfrastructure");
     }
     async getAll(where = {}) {
         const dataSource = database_bootstrap_1.default.dataSource;

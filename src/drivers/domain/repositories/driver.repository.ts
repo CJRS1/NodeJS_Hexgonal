@@ -8,7 +8,7 @@ export interface DriverRepository{
     findAll(): Promise<DriverModel[]>
 } */
 
-import Result from "src/shared/application/interface/result.interface";
+import Result from "../../../shared/application/interface/result.interface";
 import { BaseRepository } from "../../../shared/domain/base-repository";
 import { DriverModel } from "../models/driver.model";
 

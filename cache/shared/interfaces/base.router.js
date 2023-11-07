@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseRouter = void 0;
 const express_1 = __importDefault(require("express"));
+const errors_helper_1 = require("../helpers/errors.helper");
 class BaseRouter {
     constructor(controller) {
         this.controller = controller;
@@ -13,11 +14,11 @@ class BaseRouter {
         this.mountRoutes();
     }
     mountRoutesCommons() {
-        this.expressRouter.get("/", this.controller.list);
-        this.expressRouter.post("/", this.controller.add);
-        this.expressRouter.put("/:id", this.controller.update);
-        this.expressRouter.delete("/:id", this.controller.delete);
-        this.expressRouter.get("/:id", this.controller.listOne);
+        this.expressRouter.get("/", errors_helper_1.HandlerErrors.catchError(this.controller.list));
+        this.expressRouter.post("/", errors_helper_1.HandlerErrors.catchError(this.controller.add));
+        this.expressRouter.put("/:id", errors_helper_1.HandlerErrors.catchError(this.controller.update));
+        this.expressRouter.delete("/:id", errors_helper_1.HandlerErrors.catchError(this.controller.delete));
+        this.expressRouter.get("/:id", errors_helper_1.HandlerErrors.catchError(this.controller.listOne));
         /*this.expressRouter.get("/:id", this.controller.findById); */
     }
 }

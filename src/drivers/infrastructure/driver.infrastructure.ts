@@ -1,18 +1,18 @@
-import Result from "src/shared/application/interface/result.interface";
+import Result from "../../shared/application/interface/result.interface";
 import { BaseInfrastructure } from "../../shared/infrastructure/base-infrastructure";
 import { DriverEntity } from "../domain/models/driver.entity";
 import { DriverModel } from "../domain/models/driver.model"
 import { DriverRepository } from "../domain/repositories/driver.repository";
-import DatabaseBootstrap from "src/bootstrap/database.bootstrap";
+import DatabaseBootstrap from "../../bootstrap/database.bootstrap";
 import { Repository } from "typeorm";
-import { ResponseDto } from "src/shared/application/interface/dto/response.dto";
+import { ResponseDto } from "../../shared/application/interface/dto/response.dto";
 
 export class DriverInfrastructure 
 extends BaseInfrastructure<DriverModel> 
 implements DriverRepository {
 
     constructor(){
-        super(DriverEntity);
+        super(DriverEntity, "DriverInfrastructure");
     }
 
     async getAll(where: object = {}): Promise<Result<DriverModel>> {

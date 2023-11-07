@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DriverApplication = void 0;
-const base_application_1 = require("src/shared/application/interface/base.application");
+const base_application_1 = require("../../shared/application/interface/base.application");
 const dto_1 = require("./dtos/dto");
 class DriverApplication extends base_application_1.BaseApplication {
     /* Para no usar dependencias ocultas usamos a DriverRepository */
     constructor(repositoryDriver) {
-        super(repositoryDriver, new dto_1.DriverDTO());
+        super(repositoryDriver, new dto_1.DriverDTO(), "DriverApplication");
         this.repositoryDriver = repositoryDriver;
     }
     /* Aquí va la logica */

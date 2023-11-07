@@ -1,5 +1,5 @@
-import { DriverModel } from "src/drivers/domain/models/driver.model";
-import Result from "src/shared/application/interface/result.interface";
+import { DriverModel } from "../../../drivers/domain/models/driver.model";
+import Result from "../../../shared/application/interface/result.interface";
 
 /* Sirve para eliminar campos */
 

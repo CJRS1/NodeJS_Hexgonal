@@ -31,9 +31,11 @@ const database_bootstrap_1 = __importDefault(require("../../bootstrap/database.b
 const _ = __importStar(require("lodash"));
 const response_dto_1 = require("../application/interface/dto/response.dto");
 const trace_helpers_1 = require("../helpers/trace.helpers");
+const logging_helpers_1 = require("../helpers/logging.helpers");
 class BaseInfrastructure {
-    constructor(entity) {
+    constructor(entity, infrastructureName = null) {
         this.entity = entity;
+        this.infrastructureName = infrastructureName;
     }
     async update(entity, where, relations = []) {
         const dataSource = database_bootstrap_1.default.dataSource;
@@ -45,7 +47,7 @@ class BaseInfrastructure {
         /* Loash es para que actualice determinados campos no todos */
         recordToUpdate = _.merge(recordToUpdate, entity);
         await repository.save(recordToUpdate);
-        return (0, response_dto_1.ResponseDto)(trace_helpers_1.Trace.traceId, recordToUpdate);
+        return (0, response_dto_1.ResponseDto)(trace_helpers_1.Trace.traceId(), recordToUpdate);
     }
     async delete(where) {
         const dataSource = database_bootstrap_1.default.dataSource;
@@ -55,16 +57,24 @@ class BaseInfrastructure {
         });
         recordToDelete = _.merge(recordToDelete, { active: false });
         await repository.save(recordToDelete);
-        return (0, response_dto_1.ResponseDto)(trace_helpers_1.Trace.traceId, recordToDelete);
+        return (0, response_dto_1.ResponseDto)(trace_helpers_1.Trace.traceId(), recordToDelete);
     }
     async findOne(where = {}, relations = []) {
         const dataSource = database_bootstrap_1.default.dataSource;
         const repository = dataSource.getRepository(this.entity);
         const data = await repository.findOne({ where, relations });
-        return (0, response_dto_1.ResponseDto)(trace_helpers_1.Trace.traceId, data);
+        return (0, response_dto_1.ResponseDto)(trace_helpers_1.Trace.traceId(), data);
     }
     /* Valor por defecto se el da al findAll vario por si no se envia nada */
     async findAll(where = {}, relations = [], order = {}) {
+        logging_helpers_1.Logger.getLogger().info({
+            typeElement: this.infrastructureName || "infractucture",
+            typeAction: "list",
+            traceId: trace_helpers_1.Trace.traceId(),
+            message: "List all drivers",
+            query: JSON.stringify({}),
+            datetime: new Date(),
+        });
         const dataSource = database_bootstrap_1.default.dataSource;
         const repository = dataSource.getRepository(this.entity);
         const _where = Object.assign(where, { active: true });
@@ -73,14 +83,14 @@ class BaseInfrastructure {
             relations,
             order,
         });
-        return (0, response_dto_1.ResponseDto)(trace_helpers_1.Trace.traceId, data);
+        return (0, response_dto_1.ResponseDto)(trace_helpers_1.Trace.traceId(), data);
     }
     async insert(entity) {
         const dataSource = database_bootstrap_1.default.dataSource;
         const repository = dataSource.getRepository(this.entity);
         const instance = repository.create(entity);
         const data = await repository.save(instance);
-        return (0, response_dto_1.ResponseDto)(trace_helpers_1.Trace.traceId, data);
+        return (0, response_dto_1.ResponseDto)(trace_helpers_1.Trace.traceId(), data);
     }
     async getPage(page, pageSize, where = {}, relations = [], order = {}) {
         const dataSource = database_bootstrap_1.default.dataSource;
@@ -92,7 +102,7 @@ class BaseInfrastructure {
             skip: page * pageSize,
             take: pageSize,
         });
-        return (0, response_dto_1.ResponseDto)(trace_helpers_1.Trace.traceId, data, total);
+        return (0, response_dto_1.ResponseDto)(trace_helpers_1.Trace.traceId(), data, total);
     }
 }
 exports.BaseInfrastructure = BaseInfrastructure;
