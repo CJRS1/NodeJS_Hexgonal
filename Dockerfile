@@ -14,7 +14,8 @@ ADD . .
 RUN npm run build
 
 #Cuando el contenedor exista se va a ejecutar este comando
-#Se ejecuta cuando se crea el contenedor no la imagen
+#Se ejecuta cuando se crea el contenedor no la imagen 
+#node:16.13-alpine3.15
 #CMD ["npm", "run", "start"]
 
 FROM public.ecr.aws/docker/library/node:lts
