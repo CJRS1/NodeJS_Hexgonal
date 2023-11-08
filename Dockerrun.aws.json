@@ -1,7 +1,7 @@
 {
   "AWSEBDockerVersion": "1",
   "Image": {
-    "Name": "282865065290.dkr.ecr.us-east-1.amazonaws.com/cursonodejs09:latest"
+    "Name": "777217959268.dkr.ecr.us-east-1.amazonaws.com/nodepractice:latest"
   },
   "Ports": [
     {

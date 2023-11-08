@@ -1,10 +1,10 @@
 # Para instalar NODE con la version de DockerHub
-FROM node:16.13-alpine3.15 as STAGE_BUILD
+FROM public.ecr.aws/docker/library/node:lts as STAGE_BUILD
 # se determina el directorio de trabajo
 WORKDIR /code
 # Copias solo los archivos que comiencen con package y terminen en json
 # . es que lo copia al archivo de trabajo
-ADD package*.json .
+ADD package*.json ./
 # instalar las librerías
 RUN npm install
 # . resto de archivos de docker file todos, pero quiero ignorar
@@ -17,7 +17,7 @@ RUN npm run build
 #Se ejecuta cuando se crea el contenedor no la imagen
 #CMD ["npm", "run", "start"]
 
-FROM node:16.13-alpine3.15
+FROM public.ecr.aws/docker/library/node:lts
 
 WORKDIR /app
 #Copia lo de la izquierda a la derecha
