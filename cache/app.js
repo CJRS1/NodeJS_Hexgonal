@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-// import RoutesUser from './users/interfaces/http/user.routes';
+const user_routes_1 = __importDefault(require("./users/interfaces/http/user.routes"));
 const drivers_route_1 = __importDefault(require("./drivers/interfaces/drivers.route"));
 const errors_helper_1 = require("./shared/helpers/errors.helper");
 // import { v4 as uuidv4 } from "uuid";
@@ -33,7 +33,7 @@ class App {
         // });
     }
     mountRouter() {
-        // this.expressApp.use("/users", new RoutesUser().expressRouter)
+        this.expressApp.use("/users", new user_routes_1.default().expressRouter);
         this.expressApp.use("/drivers", new drivers_route_1.default().expressRouter);
     }
     mountHealthCheck() {

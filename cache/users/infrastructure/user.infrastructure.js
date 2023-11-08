@@ -5,7 +5,7 @@ const base_infrastructure_1 = require("../../shared/infrastructure/base-infrastr
 const user_entity_1 = require("../domain/models/user.entity");
 class UserInfrastructure extends base_infrastructure_1.BaseInfrastructure {
     constructor() {
-        super(user_entity_1.UserEntity);
+        super(user_entity_1.UserEntity, "UserInfrastructure");
     }
 }
 exports.UserInfrastructure = UserInfrastructure;

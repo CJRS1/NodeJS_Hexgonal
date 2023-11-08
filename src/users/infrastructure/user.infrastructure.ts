@@ -9,7 +9,7 @@ export class UserInfrastructure
     implements UserRepository {
     
         constructor(){
-            super(UserEntity)
+            super(UserEntity, "UserInfrastructure")
         }
 
 }

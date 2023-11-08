@@ -19,13 +19,5 @@ export default class extends BaseRouter{
     mountRoutes(): void {}
 }
 
-const router = express.Router();
-
-router.get('/', userController.list)
-router.post("/", userController.add);
-router.put("/", userController.update);
-router.delete("/:id", userController.delete);
-router.get("/:id", userController.findById);
-
 
 

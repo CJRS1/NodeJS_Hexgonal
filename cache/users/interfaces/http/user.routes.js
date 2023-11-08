@@ -1,9 +1,5 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
 const user_controller_1 = require("./user.controller");
 const user_application_1 = require("../../application/user.application");
 const user_infrastructure_1 = require("../../infrastructure/user.infrastructure");
@@ -20,10 +16,4 @@ class default_1 extends base_router_1.BaseRouter {
     mountRoutes() { }
 }
 exports.default = default_1;
-const router = express_1.default.Router();
-router.get('/', userController.list);
-router.post("/", userController.add);
-router.put("/", userController.update);
-router.delete("/:id", userController.delete);
-router.get("/:id", userController.findById);
 //# sourceMappingURL=user.routes.js.map

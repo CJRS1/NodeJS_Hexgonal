@@ -1,32 +1,15 @@
-import { DriverModel } from "../../../drivers/domain/models/driver.model";
-import Result from "../../../shared/application/interface/result.interface";
+import Result from "src/shared/application/interface/result.interface";
+import { DriverModel } from "../../domain/models/driver.model";
+import { DTOAbstract } from "src/shared/application/interface/dto/abstract.dto";
 
-/* Sirve para eliminar campos */
-
-const FilterFieldActiveInDriver = (driver: DriverModel) => ({
-    id: driver.id,
-    name: driver.name,
-    lastname: driver.lastname,
-});
+const FilterFieldActiveInDriver = (driver: DriverModel) => {
+    const obj = Object.assign({}, driver);
+    delete obj.active;
+    return obj;
+};
 
 export interface CB<T> {
     cb(result: Result<T>): Result<T>;
-}
-
-export abstract class DTOAbstract<T> {
-    abstract callback(result: Result<T>): Result<T>;
-    /* abstract listFunctions: CB<T>[]
-  
-    execute(callback: CB<T>): CB<T> {
-      const result = callback()
-  
-      return this.execute(callback.cb(result));
-    } */
-
-    mapping(result: Result<T>): Result<T> {
-        return this.callback(result);
-        // this.execute(this.listFunctions[0]);
-    }
 }
 
 export class DriverDTO extends DTOAbstract<DriverModel> {
@@ -36,7 +19,6 @@ export class DriverDTO extends DTOAbstract<DriverModel> {
         if (Array.isArray(data)) {
             result.payload.data = data.map(FilterFieldActiveInDriver);
         } else {
-            /* Quita el campo active */
             delete (result.payload.data as DriverModel).active;
         }
 

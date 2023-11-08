@@ -16,6 +16,9 @@ export class UserEntity {
     age: number;
 
     @Column({ type: "varchar", length: 150 })
+    email: string;
+
+    @Column({ type: "varchar", length: 150 })
     password: string;
 
     @Column({ type: "varchar", length: 100 })
@@ -24,10 +27,10 @@ export class UserEntity {
     @Column({ type: "datetime" })
     createdAt: string;
 
-    @Column({ type: "datetime" })
+    @Column({ type: "datetime", nullable: true })
     updatedAt: string;
 
-    @Column({ type: "datetime" })
+    @Column({ type: "datetime", nullable: true })
     deletedAt: string;
 
     @Column({ type: "boolean", default: true })

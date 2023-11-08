@@ -1,8 +1,8 @@
-import { DTOAbstract } from "../../../drivers/application/dtos/dto";
 import Result from "./result.interface";
 import { BaseRepository } from "../../../shared/domain/base-repository";
 import { Trace } from "../../../shared/helpers/trace.helpers";
 import { Logger } from "../../../shared/helpers/logging.helpers";
+import { DTOAbstract } from "./dto/abstract.dto";
 
 export class BaseApplication<T> {
     constructor(
@@ -12,7 +12,9 @@ export class BaseApplication<T> {
     ) { }
 
     async add(entity: T): Promise<Result<T>> {
-        return await this.repository.insert(entity);
+        /* Con esto se quita los campos que no debe de traer */
+        const result = await this.repository.insert(entity);
+        return this.dto.mapping(result);
     }
 
     async update(

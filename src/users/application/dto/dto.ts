@@ -1,0 +1,32 @@
+import Result from "src/shared/application/interface/result.interface";
+import { UserModel } from "../../domain/models/user.model";
+import { DTOAbstract } from "src/shared/application/interface/dto/abstract.dto";
+
+
+export class UserDTO extends DTOAbstract<UserModel> {
+    callback(result: Result<UserModel>): Result<UserModel> {
+        const data = result.payload.data;
+
+        if (Array.isArray(data)) {
+            result.payload.data = data.map((user: UserModel) => {
+                delete user.password;
+                delete user.active;
+                delete user.refreshToken;
+                delete user.createdAt;
+                delete user.updatedAt;
+                delete user.deletedAt;
+
+                return user;
+            });
+        } else {
+            delete (result.payload.data as UserModel).active;
+            delete (result.payload.data as UserModel).password;
+            delete (result.payload.data as UserModel).refreshToken;
+            delete (result.payload.data as UserModel).createdAt;
+            delete (result.payload.data as UserModel).updatedAt;
+            delete (result.payload.data as UserModel).deletedAt;
+        }
+
+        return result;
+    }
+}
