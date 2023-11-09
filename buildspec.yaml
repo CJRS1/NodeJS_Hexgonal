@@ -5,10 +5,10 @@ phases:
     commands:
       - echo Logging in to AWS ECR
       - aws --version
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 777217959268.dkr.ecr.us-east-1.amazonaws.com/nodepractice
-      - export REPOSITORY_URI=777217959268.dkr.ecr.us-east-1.amazonaws.com/nodepractice
-      - export COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - export IMAGE_TAG=${COMMIT_HASH:=latest}
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 282865065290.dkr.ecr.us-east-1.amazonaws.com/cursonodejs09
+      - REPOSITORY_URI=282865065290.dkr.ecr.us-east-1.amazonaws.com/cursonodejs09
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
     commands:
       - echo Build started on `date`
@@ -26,3 +26,4 @@ phases:
 artifacts:
   files:
     - "Dockerrun.aws.json"
+
