@@ -12,6 +12,7 @@ export interface IUser {
     email: string
     password: string
     age: number
+    roles: number[];
     refreshToken: string
     createdAt: Date
     updatedAt: Date
@@ -27,6 +28,7 @@ export class UserFactory {
         const age = user.age;
         const lastname = user.lastname;
         const email = user.email;
+        const roles = user.roles;
         const password = PasswordService.hashPassword(user.password);
         const refreshToken = TokenService.generateRefreshToken();
         const createdAt = new Date();
@@ -50,6 +52,7 @@ export class UserFactory {
             email,
             password,
             age,
+            roles,
             refreshToken,
             createdAt,
             updatedAt,

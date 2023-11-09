@@ -1,5 +1,5 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { HistoryEntity } from '../../../history/domain/models/history.entity';
+import { RoleEntity } from 'src/roles/domain/models/role.entity';
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: "user" })
 export class UserEntity {
@@ -36,4 +36,7 @@ export class UserEntity {
     @Column({ type: "boolean", default: true })
     active: boolean;
 
+    @ManyToMany((type) => RoleEntity, (role) => role.users)
+    @JoinTable()
+    roles: RoleEntity[];
 }

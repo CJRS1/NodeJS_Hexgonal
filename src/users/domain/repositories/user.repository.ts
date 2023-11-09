@@ -8,9 +8,8 @@ export interface UserRepository{
     findAll(): Promise<UserModel[]>
 } */
 
+
 import { BaseRepository } from "../../../shared/domain/base-repository";
 import { UserModel } from "../models/user.model";
 
-export interface UserRepository extends BaseRepository<UserModel, string> {
-    
-}
+export interface UserRepository extends BaseRepository<UserModel, string> {}

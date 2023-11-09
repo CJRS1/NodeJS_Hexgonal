@@ -3,6 +3,8 @@ import RoutesUser from './users/interfaces/http/user.routes';
 import RoutesDriver from "./drivers/interfaces/drivers.route";
 import RoutesAuth from "./auth/interfaces/auth.route";
 import { HandlerErrors } from './shared/helpers/errors.helper';
+import { Authentication } from './shared/middleware/authentication.guard';
+import { Authorization } from './shared/middleware/authorization.guard';
 // import { v4 as uuidv4 } from "uuid";
 
 /* const app = express();
@@ -38,9 +40,22 @@ class App {
     }
 
     mountRouter(): void {
-        this.expressApp.use("/users", new RoutesUser().expressRouter)
-        this.expressApp.use("/drivers", new RoutesDriver().expressRouter);
-        this.expressApp.use("/auth", new RoutesAuth().expressRouter);
+
+        this.expressApp.use(
+            "/users",
+            Authentication.canActivate,
+            Authorization.canActivate("ADMIN"),
+            new RoutesUser().expressRouter)
+
+        this.expressApp.use(
+            "/drivers",
+            Authentication.canActivate,
+            Authorization.canActivate("ADMIN", "OPERATOR"),
+            new RoutesDriver().expressRouter);
+
+        this.expressApp.use(
+            "/auth",
+            new RoutesAuth().expressRouter);
     }
 
     mountHealthCheck(): void {
