@@ -1,7 +1,7 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "777217959268.dkr.ecr.us-east-1.amazonaws.com/nodepractice:latest"
+    "Name": "777217959268.dkr.ecr.us-east-1.amazonaws.com/nodehexagonalrepository:latest"
   },
   "Ports": [
     {
