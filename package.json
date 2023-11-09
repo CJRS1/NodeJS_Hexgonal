@@ -27,9 +27,9 @@
     "winston": "^3.11.0"
   },
   "devDependencies": {
+    "@types/ioredis": "^5.0.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/express": "^4.17.20",
-    "@types/ioredis": "^5.0.0",
     "@types/lodash": "^4.14.200",
     "@types/uuid": "^9.0.6",
     "gulp": "^4.0.2",
