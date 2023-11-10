@@ -4,6 +4,7 @@ services:
   mysql:
     image: mysql:8
     container_name: mysql_server
+    restart: always
     ports:
       - "5200:3306"
     environment:
@@ -58,6 +59,13 @@ services:
       - 5601:5601
     networks:
       - net-cursonodejs09
+
+  # sonarqube:
+  #   image: sonarqube:8-community
+  #   container_name: sonarqube
+  #   ports:
+  #     - 9000:9000
+  #     - 9092:9092
 
 volumes:
   vol-mysql-nodejs09:

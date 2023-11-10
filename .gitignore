@@ -4,3 +4,5 @@ cache
 typeorm
 dist
 reports
+env.txt
+env.yaml

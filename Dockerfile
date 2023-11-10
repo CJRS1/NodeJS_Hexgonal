@@ -1,5 +1,5 @@
 # Para instalar NODE con la version de DockerHub
-FROM public.ecr.aws/docker/library/node:lts as STAGE_BUILD
+FROM node:alpine3.17 as STAGE_BUILD
 # se determina el directorio de trabajo
 WORKDIR /code
 # Copias solo los archivos que comiencen con package y terminen en json
@@ -17,15 +17,15 @@ RUN npm run build
 #Se ejecuta cuando se crea el contenedor no la imagen 
 #node:16.13-alpine3.15
 #CMD ["npm", "run", "start"]
-#
 
-FROM public.ecr.aws/docker/library/node:lts
+FROM node:alpine3.17
 
 WORKDIR /app
 #Copia lo de la izquierda a la derecha
+COPY --from=STAGE_BUILD /code/env.txt .
 COPY --from=STAGE_BUILD /code/node_modules ./node_modules
 COPY --from=STAGE_BUILD /code/dist ./dist
-COPY package.json .
-COPY env.yaml .
+COPY --from=STAGE_BUILD /code/package.json .
+#COPY env.yaml .
 
 CMD ["npm", "run", "start"]

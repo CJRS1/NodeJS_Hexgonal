@@ -1,18 +1,27 @@
-import * as wins from "winston"
-
+import * as wins from "winston";
+const logstash = require("winston-logstash-transport");
 export class Logger {
     transports: any[] = [];
     static instance: any;
-    private logger: wins.Logger;
-    /*  */
+    public logger: wins.Logger;
     MESSAGE = Symbol.for("message");
+    LEVEL = Symbol.for("level");
 
-    private constructor() { }
+    private constructor() {
+        this.errorFormatter = this.errorFormatter.bind(this);
+        this.errorToLog = this.errorToLog.bind(this);
+        this.createTagged = this.createTagged.bind(this);
+        this.create = this.create.bind(this);
+    }
 
     static getLogger(): wins.Logger {
         if (!Logger.instance) {
             Logger.instance = new Logger();
-            Logger.instance.addTransport(Transport.console).create();
+            /* Métodos de tipo getter */
+            Logger.instance
+                .addTransport(Transport.console)
+                .addTransport(Transport.ekl)
+                .create();
         }
 
         return Logger.instance.logger;
@@ -24,10 +33,13 @@ export class Logger {
     }
 
     create() {
-        const logger = wins.createLogger({
+        const logger: any = wins.createLogger({
             level: "info",
             transports: this.transports,
-            format: wins.format.combine(wins.format(this.createTagged)()),
+            format: wins.format.combine(
+                wins.format(this.errorFormatter)(),
+                wins.format(this.createTagged)()
+            ),
         });
 
         this.logger = logger;
@@ -38,8 +50,44 @@ export class Logger {
             env: "dev",
         };
         const taggedLog = Object.assign(tag, logEntry);
-        /* una propiedad es message */
-        logEntry["message"] = JSON.stringify(taggedLog);
+        logEntry[this.MESSAGE] = JSON.stringify(taggedLog);
+
+        return logEntry;
+    }
+
+    errorToLog(logEntry: any) {
+        const formatted: any = {
+            message: null,
+            level: "error",
+        };
+
+        formatted[this.LEVEL] = "error";
+
+        if (logEntry.message) {
+            formatted[this.MESSAGE] = `${logEntry.message}: ${logEntry.stack}`;
+        } else {
+            formatted[this.MESSAGE] = logEntry.stack;
+        }
+
+        return formatted;
+    }
+
+    errorFormatter(logEntry: any) {
+        /* Si es una instancia de la clase Error */
+        if (logEntry instanceof Error) {
+            return this.errorToLog(logEntry);
+        }
+        /* Si tiene la propiedad stack */
+        if (logEntry.stack) {
+            logEntry.message = `${logEntry.message}: ${logEntry.stack}`;
+        }
+
+        if (logEntry.message?.err instanceof Error) {
+            return this.errorToLog(logEntry.message.err);
+        }
+
+        logEntry.message = JSON.stringify(logEntry.message);
+
         return logEntry;
     }
 }
@@ -61,6 +109,15 @@ export class Transport {
                 })
             ),
             handleExceptions: true,
+        });
+    }
+
+    static get ekl() {
+        /* Devuelve una instancia de logstah */
+        /* Kibana */
+        return new logstash.LogstashTransport({
+            host: "localhost",
+            port: 1514,
         });
     }
 }
