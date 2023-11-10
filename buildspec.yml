@@ -12,6 +12,7 @@ phases:
       - ENVIRONMENT=$(echo $environment)
       - echo Showing $environment
       - echo $ENVIRONMENT
+      - echo "El entorno es ${{ env.environment }}"
       
   build:
     commands:
