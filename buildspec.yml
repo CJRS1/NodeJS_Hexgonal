@@ -9,12 +9,14 @@ phases:
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 777217959268.dkr.ecr.us-east-1.amazonaws.com
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - ENVIRONMENT=$(echo $environment)
+      - echo Showing environment
+      - echo $ENVIRONMENT
       
   build:
     commands:
       - echo Build started on `date`
       - echo Building the docker image
-      - export ENVIRONMENT=$environment
       - aws s3 cp s3://devops-nodehexagonalrepository/production/env.yaml env.yaml
       - npm install
       - docker build -t $REPOSITORY_URI:latest .

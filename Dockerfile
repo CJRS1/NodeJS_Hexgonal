@@ -22,7 +22,6 @@ FROM node:alpine3.17
 
 WORKDIR /app
 #Copia lo de la izquierda a la derecha
-COPY --from=STAGE_BUILD /code/env.txt .
 COPY --from=STAGE_BUILD /code/node_modules ./node_modules
 COPY --from=STAGE_BUILD /code/dist ./dist
 COPY --from=STAGE_BUILD /code/package.json .
