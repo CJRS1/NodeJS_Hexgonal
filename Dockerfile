@@ -1,5 +1,5 @@
 # Para instalar NODE con la version de DockerHub
-FROM node:alpine3.17 as STAGE_BUILD
+FROM node:16.13-alpine3.15 as STAGE_BUILD
 # se determina el directorio de trabajo
 WORKDIR /code
 # Copias solo los archivos que comiencen con package y terminen en json
@@ -18,7 +18,7 @@ RUN npm run build
 #node:16.13-alpine3.15
 #CMD ["npm", "run", "start"]
 
-FROM node:alpine3.17
+FROM node:16.13-alpine3.15
 
 WORKDIR /app
 #Copia lo de la izquierda a la derecha
