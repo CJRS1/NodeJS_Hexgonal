@@ -25,6 +25,7 @@ WORKDIR /app
 COPY --from=STAGE_BUILD /code/node_modules ./node_modules
 COPY --from=STAGE_BUILD /code/dist ./dist
 COPY --from=STAGE_BUILD /code/package.json .
+#COPY package.json .
 #COPY env.yaml .
 
 CMD ["npm", "run", "start"]
