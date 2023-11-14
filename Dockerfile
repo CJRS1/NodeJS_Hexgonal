@@ -1,15 +1,15 @@
 # Para instalar NODE con la version de DockerHub
-FROM node:16.13-alpine3.15 as STAGE_BUILD
+FROM node:16.13-alpine3.15 as builder
 # se determina el directorio de trabajo
-WORKDIR /app
+WORKDIR /build
 # Copias solo los archivos que comiencen con package y terminen en json
 # . es que lo copia al archivo de trabajo
-ADD package*.json ./
+COPY package*.json .
 # instalar las librerías
 RUN npm install
 # . resto de archivos de docker file todos, pero quiero ignorar
 # Para ignorar necesitamos .dockerignore
-ADD . .
+COPY . .
 # Necesito ejecutar el comando
 RUN npm run build
 
@@ -22,11 +22,9 @@ FROM node:16.13-alpine3.15
 
 WORKDIR /app
 #Copia lo de la izquierda a la derecha
-COPY --from=STAGE_BUILD /app/node_modules ./node_modules
-COPY --from=STAGE_BUILD /app/dist ./dist
-COPY --from=STAGE_BUILD /app/package.json .
-COPY --from=STAGE_BUILD /app/env.yaml .
-#COPY package.json .
-#COPY env.yaml .
+COPY --from=builder /build/node_modules ./node_modules
+COPY --from=builder /build/dist ./dist
+COPY package.json .
+COPY env.yaml .
 
 CMD ["npm", "run", "start"]
