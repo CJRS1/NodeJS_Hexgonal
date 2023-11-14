@@ -1,7 +1,7 @@
 # Para instalar NODE con la version de DockerHub
 FROM node:16.13-alpine3.15 as STAGE_BUILD
 # se determina el directorio de trabajo
-WORKDIR /code
+WORKDIR /app
 # Copias solo los archivos que comiencen con package y terminen en json
 # . es que lo copia al archivo de trabajo
 ADD package*.json ./
@@ -22,9 +22,10 @@ FROM node:16.13-alpine3.15
 
 WORKDIR /app
 #Copia lo de la izquierda a la derecha
-COPY --from=STAGE_BUILD /code/node_modules ./node_modules
-COPY --from=STAGE_BUILD /code/dist ./dist
-COPY --from=STAGE_BUILD /code/package.json .
+COPY --from=STAGE_BUILD /app/node_modules ./node_modules
+COPY --from=STAGE_BUILD /app/dist ./dist
+COPY --from=STAGE_BUILD /app/package.json .
+COPY --from=STAGE_BUILD /app/env.yaml .
 #COPY package.json .
 #COPY env.yaml .
 

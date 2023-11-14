@@ -13,7 +13,7 @@ services:
     volumes:
       - vol-mysql-nodejs09:/var/lib/mysql
     networks:
-      - net-cursonodejs09
+      - backend
 
   redis:
     image: redis:6.0.5-alpine
@@ -34,7 +34,7 @@ services:
       - 1515:1515
       - 1515:1515/udp
     networks:
-      - net-cursonodejs09
+      - backend
 
   elasticsearch:
     image: elasticsearch:7.8.0
@@ -48,7 +48,7 @@ services:
     environment:
       discovery.type: single-node
     networks:
-      - net-cursonodejs09
+      - backend
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.8.0
@@ -58,7 +58,7 @@ services:
     ports:
       - 5601:5601
     networks:
-      - net-cursonodejs09
+      - backend
 
   # sonarqube:
   #   image: sonarqube:8-community
@@ -72,4 +72,4 @@ volumes:
   vol-elasticsearch:
 
 networks:
-  net-cursonodejs09:
+  backend:
